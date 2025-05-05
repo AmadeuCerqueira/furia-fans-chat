@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FURIA Fans Chat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <img src="Imagens/Furia_Esports_logo.png" alt="Logo da FURIA" class="furia-logo">
+        </div>
+        <h1 class="header-title">FURIA Fans Chat</h1>
+        <nav class="header-nav">
+            <a href="#live-match">Ao Vivo</a>
+            <a href="#chat">Contato</a>
+            <a href="https://www.furia.gg/" target="_blank" class="btn-header">Site Oficial</a>
+            <a href="https://api.whatsapp.com/send?l=pt&phone=5511945128297&text=Poderia%20me%20ajudar?" target="_blank" title="WhatsApp">
+                <i class="fab fa-whatsapp icon-social"></i>
+            </a>
+            <a href="https://www.instagram.com/furia.apparel/" target="_blank" title="Instagram">
+                <i class="fab fa-instagram icon-social"></i>
+            </a>
+        </nav>
+        
+        
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Conecte-se com a FURIA em tempo real!</h2>
+            <p>Acompanhe os jogos, interaja com a torcida e fique por dentro de tudo!</p>
+            <a href="https://t.me/+Sj7wHFjIJ9Y2Njkx" class="btn" target="_blank">Participe do nosso grupo   </a>
+        </div>
+    </section>
+
+    <section class="features">
+        <h3>O que você encontra aqui:</h3>
+        <ul>
+            <li><i class="fas fa-broadcast-tower"></i> Live status dos jogos</li>
+            <li><i class="fas fa-newspaper"></i> Últimas notícias da FURIA</li>
+            <li><i class="fas fa-users"></i> Comunidade de fãs ativa</li>
+        </ul>
+    </section>
+    
+
+    <section id="live-match">
+        <h3>Partida ao Vivo - FURIA</h3>
+        <div class="live-container">
+            <div class="live-video">
+                <iframe src="https://www.youtube.com/embed/IE-rdJ0Rg6o" 
+                title="FURIA Valorant Match" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="live-chat">
+                <div class="live-chat-messages" id="live-chat-messages">
+                    <!-- Mensagens simuladas aqui -->
+                </div>
+
+                <div class="cheer-actions">
+                    <h4>Simule sua torcida!</h4>
+                    <div class="cheer-buttons">
+                        <button class="btn-cheer" onclick="torcer('👏 Aplausos para a FURIA!')">👏 Aplaudir</button>
+                        <button class="btn-cheer" onclick="torcer('🔥 VAMOOO FURIA!')">🔥 Gritar</button>
+                        <button class="btn-cheer" onclick="torcer('🐆 Rugido da torcida!')">🐆 Rugir</button>
+                    </div>
+                    <div class="cheer-input">
+                        <input type="text" id="cheerText" placeholder="Digite sua mensagem..." />
+                        <button onclick="enviarCheer()" class="btn-cheer">📣 Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="chat">     
+        <h3>Contato Inteligente da FURIA</h3>
+        <div id="smart-chat" class="chat-box">
+            <!-- Mensagens automáticas e torcidas aparecerão aqui -->
+        </div>
+        <div id="typing" style="display:none; margin-top:10px;">✍️ Digitando...</div>
+        <button id="next-message" class="btn">Próxima Atualização</button>
+    </section>
+
+    <footer>
+        <p>© 2025 FURIA Fans. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const smartChat = document.getElementById('smart-chat');
+        const nextButton = document.getElementById('next-message');
+        const typingIndicator = document.getElementById('typing');
+
+        const mensagens = [
+            { text: "👋 Olá, fã da FURIA! Seja bem-vindo ao nosso chat oficial!", sender: "furia" },
+            { text: "🎮 Próximo jogo: FURIA vs NAVI - Hoje às 18h00!", sender: "furia" },
+            { text: "📢 Notícias: Novo drop de camisa oficial já disponível na loja!", sender: "furia" },
+            { text: "🏆 Último resultado: FURIA 2 x 0 MIBR. GGWP!", sender: "furia" },
+            { text: "🔥 Promoção exclusiva para membros do chat: 10% off na próxima compra!", sender: "furia" }
+        ];
+
+        let indice = 0;
+
+        nextButton.addEventListener('click', function() {
+            if (indice < mensagens.length) {
+                typingIndicator.style.display = 'block';
+
+                setTimeout(() => {
+                    typingIndicator.style.display = 'none';
+
+                    const msgData = mensagens[indice];
+                    const novaMensagem = document.createElement('div');
+                    novaMensagem.classList.add('message', msgData.sender);
+                    novaMensagem.textContent = msgData.text;
+
+                    smartChat.appendChild(novaMensagem);
+                    smartChat.scrollTop = smartChat.scrollHeight;
+
+                    indice++;
+                }, 1000);
+            } else {
+                nextButton.disabled = true;
+                nextButton.textContent = "Todas as atualizações enviadas!";
+            }
+        });
+
+        // Função para enviar torcida para o chat ao lado do vídeo
+        function torcer(mensagem) {
+            const novaMensagem = document.createElement('div');
+            novaMensagem.classList.add('msg', 'fan');
+            novaMensagem.textContent = mensagem;
+
+            const liveChat = document.getElementById('live-chat-messages');
+            liveChat.appendChild(novaMensagem);
+            liveChat.scrollTop = liveChat.scrollHeight;
+        }
+
+        // Campo de texto personalizado
+        function enviarCheer() {
+            const input = document.getElementById('cheerText');
+            const mensagem = input.value.trim();
+
+            if (mensagem !== "") {
+        torcer(mensagem);
+        input.value = "";
+        }
+
+        }
+
+        // Pressionar Enter também envia
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('cheerText').addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    enviarCheer();
+                }
+            });
+        });
+
+        // Mensagens automáticas no chat da torcida
+        const mensagensLive = [
+            "🔥 Vamos FURIA!!",
+            "👏 Jogadaça!",
+            "🐆 Confio no time!",
+            "💥 Que bala!",
+            "🏆 Bora levar esse mapa!",
+            "👊 Acredita!!",
+            "💣 Plantando a bomba!",
+            "🎯 Headshot lindo!"
+        ];
+
+        function enviarMensagemLive() {
+            const liveChat = document.getElementById('live-chat-messages');
+
+            const novaMsg = document.createElement('div');
+            novaMsg.classList.add('msg');
+            novaMsg.textContent = mensagensLive[Math.floor(Math.random() * mensagensLive.length)];
+            liveChat.appendChild(novaMsg);
+
+            liveChat.scrollTop = liveChat.scrollHeight;
+        }
+
+        setInterval(enviarMensagemLive, 2500);
+    </script>
+</body>
+</html>
